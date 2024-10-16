@@ -21,7 +21,6 @@ export default function injectElementsDataFromPixaBaySearch (key, searchVal='flo
     orientation: 'portrait',
     safesearch: 'true'
   })
-  console.log(`https://pixabay.com/api/?${requestOptions}`);
   const options = {
     headers: {
       Accept: "application/json",
@@ -34,7 +33,6 @@ export default function injectElementsDataFromPixaBaySearch (key, searchVal='flo
     })
     .then(data => {
       setTimeout(()=>{
-      console.log(data);
       elementToInject.innerHTML = '';
       elementToInject.appendChild(generateImageElementsFromJSON(data.hits));
       window.scrollTo({
