@@ -3,16 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>goit-advancedjs-hw2</title>
+    <title>goit-advancedjs-hw3</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-<header>
-  <img width="92" src="./img/logo.png" alt="logo" />
-  <h3>Image search</h3>
+<header class="card header">
+  <img class="logo" width="92" src="./img/logo.png" alt="logo" />
+  <h3>Image search(pixabay)</h3>
 </header>
+
     <main>
-      <p>coming soon</p>
+      <div class="card search-bar">
+        <input class="input-search" />
+        <a class="btn btn-search">
+          <p class="btn-search-text">Search</p>
+          <div class="loader hidden"></div>
+        </a>
+      </div>
+      <div class="gallery">
+        <p class="tip">Type some words and hit Search to find images</p>
+      </div>
     </main>
   <script src="main.js" type="module"></script>
   </body>

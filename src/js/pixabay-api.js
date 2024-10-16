@@ -1,83 +1,56 @@
-import flatpickr from 'flatpickr';
-import "flatpickr/dist/flatpickr.min.css";
 
+import SimpleLightBox from 'simplelightbox';
+
+import generateImageElementsFromJSON from './render-functions.js';
 import iziToast from 'izitoast';
-import "izitoast/dist/css/iziToast.min.css"
 
-let selectedDate = new Date();
+const btnSearchText = document.querySelector('.btn-search-text');
+const loader = document.querySelector('.loader');
 
-const timeElements = document.querySelectorAll('.value');
-let btn = document.querySelector('button');
-btn.disabled = true;
+let box = new SimpleLightBox('.gallery a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+  showCounter: false,
+});
 
-const dp = document.querySelector('#datetime-picker');
-const fp = flatpickr(dp,
-  {
-    enableTime: true,
-    dateFormat: "d-m-Y H:i",
-    time_24hr: true,
-    defaultDate: new Date(),
-    minuteIncrement: 1,
-    onClose(selectedDates) {
-      if (selectedDates[0] > new Date()) {
-        selectedDate = selectedDates[0];
-        btn.disabled = false;
-        btn.classList.remove('disabled');
-      }else {
-        iziToast.error({
-          title: 'Error',
-          message: 'Please choose a date in the future',
-        });
-      }
-
-    },
-    onOpen(){
-      fp.setDate(new Date());
+export default function injectElementsDataFromPixaBaySearch (key, searchVal='flower', elementToInject) {
+  const requestOptions = new URLSearchParams( {
+    key: key,
+    q: searchVal,
+    image_type: 'photo',
+    orientation: 'portrait',
+    safesearch: 'true'
+  })
+  console.log(`https://pixabay.com/api/?${requestOptions}`);
+  const options = {
+    headers: {
+      Accept: "application/json",
     }
-  });
+  };
 
-const  convertMs = (ms) =>{
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
+  fetch(`https://pixabay.com/api/?${requestOptions}`, options)
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      setTimeout(()=>{
+      console.log(data);
+      elementToInject.innerHTML = '';
+      elementToInject.appendChild(generateImageElementsFromJSON(data.hits));
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
 
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+        box.refresh();
+        btnSearchText.classList.remove('hidden');
+        loader.classList.add('hidden');
+      },500)
 
-  return { days, hours, minutes, seconds };
+    })
+    .catch(error => {
+      iziToast.error({title:error.message});
+    })
+
 }
 
-const convertDateObjToEl = (obj) =>{
-  timeElements[0].innerHTML = obj.days.toString().padStart(2, '0');
-  timeElements[1].innerHTML = obj.hours.toString().padStart(2, '0');
-  timeElements[2].innerHTML = obj.minutes.toString().padStart(2, '0');
-  timeElements[3].innerHTML = obj.seconds.toString().padStart(2, '0');
-}
-
-
-btn.addEventListener('click', (e) => {
-  btn.disabled = true;
-  btn.classList.add('disabled');
-  dp.disabled = true;
-
-  const count = setInterval(() => {
-    let timeDiff = selectedDate - new Date();
-
-    if (timeDiff < 0) {
-      clearInterval(count);
-      dp.disabled = false;
-    }else{
-      convertDateObjToEl(convertMs(timeDiff));
-    }
-
-  }, 1000);
-
-})
