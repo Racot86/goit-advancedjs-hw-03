@@ -8,7 +8,7 @@
     <script type="module" crossorigin src="/goit-advancedjs-hw-03/index.js"></script>
     <link rel="modulepreload" crossorigin href="/goit-advancedjs-hw-03/assets/vendor-CNpq9t8i.js">
     <link rel="stylesheet" crossorigin href="/goit-advancedjs-hw-03/assets/vendor-DkczhqSJ.css">
-    <link rel="stylesheet" crossorigin href="/goit-advancedjs-hw-03/assets/index-DkDZqPGQ.css">
+    <link rel="stylesheet" crossorigin href="/goit-advancedjs-hw-03/assets/index-COrC8Qan.css">
   </head>
   <body>
 <header class="card header">
@@ -17,13 +17,15 @@
 </header>
 
     <main>
-      <div class="card search-bar">
-        <input class="input-search" />
-        <a class="btn btn-search">
-          <p class="btn-search-text">Search</p>
-          <div class="loader hidden"></div>
-        </a>
-      </div>
+      <form class="card search-bar">
+        <input class="input-search" name="data" />
+        <button class="btn btn-search" type="submit">
+          Search
+        </button>
+        <div class="btn loader-btn hidden">
+          <div class="loader"></div>
+        </div>
+      </form>
       <div class="gallery">
         <p class="tip">Type some words and hit Search to find images</p>
       </div>
