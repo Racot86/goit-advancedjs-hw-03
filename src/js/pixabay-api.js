@@ -4,8 +4,8 @@ import SimpleLightBox from 'simplelightbox';
 import generateImageElementsFromJSON from './render-functions.js';
 import iziToast from 'izitoast';
 
-const btnSearchText = document.querySelector('.btn-search-text');
-const loader = document.querySelector('.loader');
+const btnSearch = document.querySelector('.btn-search');
+const loader = document.querySelector('.loader-btn');
 
 let box = new SimpleLightBox('.gallery a', {
   captionDelay: 250,
@@ -41,7 +41,7 @@ export default function injectElementsDataFromPixaBaySearch (key, searchVal='flo
       });
 
         box.refresh();
-        btnSearchText.classList.remove('hidden');
+        btnSearch.classList.remove('hidden');
         loader.classList.add('hidden');
       },500)
 

@@ -1,20 +1,23 @@
 import './js/render-functions.js';
 import "simplelightbox/dist/simple-lightbox.min.css";
 import injectElementsDataFromPixaBaySearch from './js/pixabay-api.js';
-import iziToast from 'izitoast';
 
 let gallery = document.querySelector('.gallery');
-const inputBtn = document.querySelector('.btn-search');
+const form = document.querySelector('.search-bar');
+const btnSearch = document.querySelector('.btn-search');
 const inputSearch = document.querySelector('.input-search');
-const btnSearchText = document.querySelector('.btn-search-text');
-const loader = document.querySelector('.loader');
+const loader = document.querySelector('.loader-btn');
 
-inputBtn.addEventListener('click', e => {
-  const data = inputSearch.value;
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const data = form.data.value.trim();
   if (data.length > 0){
-    btnSearchText.classList.add('hidden');
+    btnSearch.classList.add('hidden');
     loader.classList.remove('hidden');
     injectElementsDataFromPixaBaySearch('46528220-f321f8a91f42a85f9ca952d44', data, gallery);
+  }else {
+    inputSearch.classList.add('blink');
+    setTimeout(()=>{inputSearch.classList.remove('blink');},500)
   }
 
 });

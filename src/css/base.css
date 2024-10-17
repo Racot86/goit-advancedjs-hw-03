@@ -76,6 +76,7 @@ header h3{
 
 .btn{
   display: flex;
+  line-height: 18px;
   padding: 12px 24px;
   border-radius: 24px;
   border: unset;
@@ -200,4 +201,14 @@ header h3{
 }
 .not-found span{
   font-size: 108px;
+}
+
+.blink{
+  animation: blink 0.3s linear infinite;
+}
+
+@keyframes blink {
+  0%{ background: #F5F5F5;}
+  50%{ background: lightgray;}
+  100%{ background: #F5F5F5;}
 }
